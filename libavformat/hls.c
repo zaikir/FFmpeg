@@ -974,7 +974,7 @@ static int parse_playlist(HLSContext *c, const char *url,
             for (i = 0; i < prev_n_segments && i < diff; i++) {
                 c->first_timestamp += prev_segments[i]->duration;
             }
-            av_log(c->ctx, AV_LOG_DEBUG, "Media sequence change (%"PRId64" -> %"PRId64")"
+            av_log(c->ctx, AV_LOG_WARNING, "Media sequence change (%"PRId64" -> %"PRId64")"
                    " reflected in first_timestamp: %"PRId64" -> %"PRId64"\n",
                    prev_start_seq_no, pls->start_seq_no,
                    prev_timestamp, c->first_timestamp);
