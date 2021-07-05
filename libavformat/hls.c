@@ -874,7 +874,10 @@ static int parse_playlist(HLSContext *c, const char *url,
         } else if (av_strstart(line, "#EXTINF:", &ptr)) {
             is_segment = 1;
             duration   = atof(ptr) * AV_TIME_BASE;
-            av_log(c->ctx, AV_LOG_WARNING, "%s\n", line);
+
+            pls->start_seq_no > prev_start_seq_no
+
+            av_log(c->ctx, AV_LOG_WARNING, "%s ;# prev_start_seq_no=%d ;# pls->start_seq_no=%d\n", line, prev_start_seq_no, pls->start_seq_no);
         } else if (av_strstart(line, "#EXT-X-BYTERANGE:", &ptr)) {
             seg_size = strtoll(ptr, NULL, 10);
             ptr = strchr(ptr, '@');
