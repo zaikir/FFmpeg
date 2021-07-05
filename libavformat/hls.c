@@ -875,7 +875,7 @@ static int parse_playlist(HLSContext *c, const char *url,
             is_segment = 1;
             duration   = atof(ptr) * AV_TIME_BASE;
 
-            av_log(c->ctx, AV_LOG_WARNING, "%s ;# prev_start_seq_no=%d ;# pls->start_seq_no=%d\n", line, prev_start_seq_no, pls->start_seq_no);
+            av_log(c->ctx, AV_LOG_WARNING, "%s\n", line);
         } else if (av_strstart(line, "#EXT-X-BYTERANGE:", &ptr)) {
             seg_size = strtoll(ptr, NULL, 10);
             ptr = strchr(ptr, '@');
@@ -965,7 +965,7 @@ static int parse_playlist(HLSContext *c, const char *url,
                 }
 
                 seg->init_section = cur_init_section;
-                av_log(c->ctx, AV_LOG_WARNING, "New segment added: %s ;# %f ;# %d", seg->url, seg->duration, seg->init_section);
+                av_log(c->ctx, AV_LOG_WARNING, "New segment added: %s ;# %d ;# %d \n", seg->url, seg->duration, seg->init_section);
             }
         }
     }
