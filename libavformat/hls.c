@@ -950,6 +950,7 @@ static int parse_playlist(HLSContext *c, const char *url,
                 }
                 seg->duration = duration;
                 seg->key_type = key_type;
+                
                 dynarray_add(&pls->segments, &pls->n_segments, seg);
                 is_segment = 0;
 
@@ -964,6 +965,7 @@ static int parse_playlist(HLSContext *c, const char *url,
                 }
 
                 seg->init_section = cur_init_section;
+                av_log(c->ctx, AV_LOG_WARNING, "New segment added: %s ;# %f ;# %d", seg->url, seg->duration, seg->init_section);
             }
         }
     }
