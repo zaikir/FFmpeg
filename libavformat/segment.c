@@ -414,7 +414,7 @@ static int segment_end(AVFormatContext *s, int write_trailer, int is_last)
         }
     }
 
-    av_log(s, AV_LOG_VERBOSE, "segment:'%s' count:%d ended\n",
+    av_log(s, AV_LOG_WARNING, "segment:'%s' count:%d ended\n",
            seg->avf->url, seg->segment_count);
     seg->segment_count++;
 
@@ -934,7 +934,7 @@ calc_times:
     }
 
     if (seg->segment_frame_count == 0) {
-        av_log(s, AV_LOG_VERBOSE, "segment:'%s' starts with packet stream:%d pts:%s pts_time:%s frame:%d\n",
+        av_log(s, AV_LOG_WARNING, "segment:'%s' starts with packet stream:%d pts:%s pts_time:%s frame:%d\n",
                seg->avf->url, pkt->stream_index,
                av_ts2str(pkt->pts), av_ts2timestr(pkt->pts, &st->time_base), seg->frame_count);
     }
