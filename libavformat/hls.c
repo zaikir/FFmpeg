@@ -965,7 +965,7 @@ static int parse_playlist(HLSContext *c, const char *url,
                 }
 
                 seg->init_section = cur_init_section;
-                av_log(c->ctx, AV_LOG_WARNING, "new segment: %s [%d]\n", seg->url, seg->duration);
+                av_log(c->ctx, AV_LOG_WARNING, "new segment: %s\n", seg->url);
             }
         }
     }
