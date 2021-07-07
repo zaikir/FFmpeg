@@ -1633,7 +1633,7 @@ static void update_metadata(URLContext *h, char *data)
         val += 2;
 
         av_dict_set(&s->metadata, key, val, 0);
-        av_log(h, AV_LOG_WARNING, "metadata updated: %s\n", key, val);
+        av_log(h, AV_LOG_WARNING, "metadata updated: %s\n", val);
 
         next = end + 2;
     }
