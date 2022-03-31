@@ -1090,6 +1090,8 @@ static int id3_has_changed_values(struct playlist *pls, AVDictionary *metadata,
 /* Parse ID3 data and handle the found data */
 static void handle_id3(AVIOContext *pb, struct playlist *pls)
 {
+    av_log(pls->parent, AV_LOG_WARNING, "handle_id3\n");
+
     AVDictionary *metadata = NULL;
     ID3v2ExtraMetaAPIC *apic = NULL;
     ID3v2ExtraMeta *extra_meta = NULL;
@@ -1103,6 +1105,8 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
     }
 
     if (!pls->id3_found) {
+        av_log(pls->parent, AV_LOG_WARNING, "!pls->id3_found\n");
+
         /* initial ID3 tags */
         av_assert0(!pls->id3_deferred_extra);
         pls->id3_found = 1;
@@ -1119,10 +1123,14 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
         pls->id3_initial = metadata;
 
     } else {
+        av_log(pls->parent, AV_LOG_WARNING, "pls->id3_found\n");
+
         if (!pls->id3_changed && id3_has_changed_values(pls, metadata, apic)) {
             avpriv_report_missing_feature(pls->parent, "Changing ID3 metadata in HLS audio elementary stream");
             pls->id3_changed = 1;
         }
+
+        dump_metadata(NULL, metadata, "");
         av_dict_free(&metadata);
     }
 
