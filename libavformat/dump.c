@@ -164,23 +164,22 @@ void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
     if (m && !(av_dict_count(m) == 1 && av_dict_get(m, "language", NULL, 0))) {
         const AVDictionaryEntry *tag = NULL;
 
-        av_log(ctx, AV_LOG_INFO, "%sMetadata:\n", indent);
         while ((tag = av_dict_get(m, "", tag, AV_DICT_IGNORE_SUFFIX)))
-            if (strcmp("language", tag->key)) {
+            if (strcmp("title", tag->key) == 0 || strcmp("artist", tag->key) == 0) {
                 const char *p = tag->value;
-                av_log(ctx, AV_LOG_INFO,
-                       "%s  %-16s: ", indent, tag->key);
+                av_log(ctx, AV_LOG_WARNING,
+                       "m_%-16s: ", tag->key);
                 while (*p) {
                     char tmp[256];
                     size_t len = strcspn(p, "\x8\xa\xb\xc\xd");
                     av_strlcpy(tmp, p, FFMIN(sizeof(tmp), len+1));
-                    av_log(ctx, AV_LOG_INFO, "%s", tmp);
+                    av_log(ctx, AV_LOG_WARNING, "%s", tmp);
                     p += len;
-                    if (*p == 0xd) av_log(ctx, AV_LOG_INFO, " ");
-                    if (*p == 0xa) av_log(ctx, AV_LOG_INFO, "\n%s  %-16s: ", indent, "");
+                    if (*p == 0xd) av_log(ctx, AV_LOG_WARNING, " ");
+                    if (*p == 0xa) av_log(ctx, AV_LOG_WARNING, "\n%-16s: ", "");
                     if (*p) p++;
                 }
-                av_log(ctx, AV_LOG_INFO, "\n");
+                av_log(ctx, AV_LOG_WARNING, "\n");
             }
     }
 }
