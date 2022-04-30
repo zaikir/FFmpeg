@@ -47,6 +47,8 @@
 #define MPEG_TIME_BASE 90000
 #define MPEG_TIME_BASE_Q (AVRational){1, MPEG_TIME_BASE}
 
+void dump_metadata(void *ctx, const AVDictionary *m, const char *indent);
+
 /*
  * An apple http stream consists of a playlist with media segment files,
  * played sequentially. There may be several playlists with the same
