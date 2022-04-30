@@ -1122,7 +1122,6 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
 
     } else {
         if (!pls->id3_changed && id3_has_changed_values(pls, metadata, apic)) {
-            avpriv_report_missing_feature(pls->parent, "Changing ID3 metadata in HLS audio elementary stream");
             pls->id3_changed = 1;
         }
 
