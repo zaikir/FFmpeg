@@ -182,6 +182,8 @@ void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
                 av_log(ctx, AV_LOG_WARNING, "\n");
             }
     }
+
+    av_log(ctx, AV_LOG_WARNING, "%ssegment_finished\n", indent);
 }
 
 /* param change side data*/
