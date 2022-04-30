@@ -1132,7 +1132,7 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
             pls->id3_changed = 1;
         }
 
-        dump_metadata_test(NULL, metadata, "");
+        dump_metadata_test(pls->parent, metadata, "");
         av_dict_free(&metadata);
     }
 
