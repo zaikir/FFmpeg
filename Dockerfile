@@ -13,7 +13,7 @@ FROM        base AS build
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=6.0 \
+ENV         FFMPEG_VERSION=6.1 \
     AOM_VERSION=v1.0.0 \
     CHROMAPRINT_VERSION=1.5.0 \
     FDKAAC_VERSION=0.1.5 \
@@ -506,11 +506,10 @@ RUN \
 ## Download ffmpeg https://ffmpeg.org/
 RUN  \
         DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
-        curl -sLO https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
+        curl -sLO https://github.com/zaikir/FFmpeg/archive/refs/tags/${FFMPEG_VERSION}.tar.gz && \
         tar -jx --strip-components=1 -f ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
         ./configure     --disable-debug  --disable-doc    --disable-ffplay   --enable-shared --enable-gpl  --extra-libs=-ldl && \
         make ;  make install
-
 
 
 
