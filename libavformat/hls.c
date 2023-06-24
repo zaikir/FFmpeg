@@ -1162,11 +1162,30 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
         pls->id3_initial = metadata;
 
     } else {
-        if (!pls->id3_changed && id3_has_changed_values(pls, metadata, apic)) {
+        if (id3_has_changed_values(pls, metadata, apic)) {//!pls->id3_changed && 
             avpriv_report_missing_feature(pls->parent, "Changing ID3 metadata in HLS audio elementary stream");
-            pls->id3_changed = 1;
+            // pls->id3_changed = 1;
+
+            av_dict_free(&pls->ctx->metadata);
+            av_dict_free(&pls->id3_initial);
+
+            /* initial ID3 tags */
+            av_assert0(!pls->id3_deferred_extra);
+            pls->id3_found = 1;
+
+            /* get picture attachment and set text metadata */
+            if (pls->ctx->nb_streams)
+                ff_id3v2_parse_apic(pls->ctx, extra_meta);
+            else
+                /* demuxer not yet opened, defer picture attachment */
+                pls->id3_deferred_extra = extra_meta;
+
+            ff_id3v2_parse_priv_dict(&metadata, extra_meta);
+            av_dict_copy(&pls->ctx->metadata, metadata, 0);
+            pls->id3_initial = metadata;
+        } else {
+            av_dict_free(&metadata);
         }
-        av_dict_free(&metadata);
     }
 
     if (!pls->id3_deferred_extra)
