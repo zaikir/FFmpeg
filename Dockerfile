@@ -509,7 +509,7 @@ RUN  \
         DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
         curl -sLO https://github.com/zaikir/FFmpeg/archive/refs/tags/${FFMPEG_VERSION}.tar.gz && \
         gunzip ${FFMPEG_VERSION}.tar.gz && \
-        tar -xf --strip-components=1 -f ${FFMPEG_VERSION}.tar && \
+        tar -x --strip-components=1 -f ${FFMPEG_VERSION}.tar && \
         ./configure     --disable-debug  --disable-doc    --disable-ffplay   --enable-shared --enable-gpl  --extra-libs=-ldl && \
         make ;  make install
 
