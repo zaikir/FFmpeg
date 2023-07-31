@@ -1139,6 +1139,7 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
     int64_t timestamp = AV_NOPTS_VALUE;
 
     parse_id3(pls->ctx, pb, &metadata, &timestamp, &pls->audio_setup_info, &apic, &extra_meta);
+    dump_metadata_test(NULL, metadata, " ");
 
     if (timestamp != AV_NOPTS_VALUE) {
         pls->id3_mpegts_timestamp = timestamp;

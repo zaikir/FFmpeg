@@ -158,6 +158,30 @@ static void dump_metadata(void *ctx, const AVDictionary *m, const char *indent)
     }
 }
 
+static void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
+{
+    if (m && !(av_dict_count(m) == 1 && av_dict_get(m, "language", NULL, 0))) {
+        const AVDictionaryEntry *tag = NULL;
+
+        av_log(ctx, AV_LOG_INFO, "%sMetadata:\n", indent);
+        while ((tag = av_dict_iterate(m, tag)))
+            if (strcmp("language", tag->key)) {
+                const char *p = tag->value;
+                av_log(ctx, AV_LOG_INFO,
+                       "%s  %-16s: ", indent, tag->key);
+                while (*p) {
+                    size_t len = strcspn(p, "\x8\xa\xb\xc\xd");
+                    av_log(ctx, AV_LOG_INFO, "%.*s", (int)(FFMIN(255, len)), p);
+                    p += len;
+                    if (*p == 0xd) av_log(ctx, AV_LOG_INFO, " ");
+                    if (*p == 0xa) av_log(ctx, AV_LOG_INFO, "\n%s  %-16s: ", indent, "");
+                    if (*p) p++;
+                }
+                av_log(ctx, AV_LOG_INFO, "\n");
+            }
+    }
+}
+
 /* param change side data*/
 static void dump_paramchange(void *ctx, const AVPacketSideData *sd)
 {

@@ -2638,6 +2638,7 @@ void av_dump_format(AVFormatContext *ic,
                     const char *url,
                     int is_output);
 
+void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent);
 
 #define AV_FRAME_FILENAME_FLAGS_MULTIPLE 1 ///< Allow multiple %d
 
