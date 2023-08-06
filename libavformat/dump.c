@@ -158,7 +158,7 @@ static void dump_metadata(void *ctx, const AVDictionary *m, const char *indent)
     }
 }
 
-static void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
+void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
 {
     if (m && !(av_dict_count(m) == 1 && av_dict_get(m, "language", NULL, 0))) {
         const AVDictionaryEntry *tag = NULL;
