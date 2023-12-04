@@ -727,8 +727,6 @@ static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
 static int parse_playlist(HLSContext *c, const char *url,
                           struct playlist *pls, AVIOContext *in)
 {
-    av_log(pls->parent, AV_LOG_WARNING, "parse_playlist");
-
     int ret = 0, is_segment = 0, is_variant = 0;
     int64_t duration = 0;
     enum KeyType key_type = KEY_NONE;
@@ -1061,8 +1059,6 @@ static struct segment *next_segment(struct playlist *pls)
 static int read_from_url(struct playlist *pls, struct segment *seg,
                          uint8_t *buf, int buf_size)
 {
-    av_log(pls->parent, AV_LOG_WARNING, "read_from_url");
-
     int ret;
 
      /* limit read if the segment was only a part of a file */
@@ -1109,8 +1105,6 @@ static void parse_id3(AVFormatContext *s, AVIOContext *pb,
 static int id3_has_changed_values(struct playlist *pls, AVDictionary *metadata,
                                   ID3v2ExtraMetaAPIC *apic)
 {
-    av_log(pls->parent, AV_LOG_WARNING, "id3_has_changed_values");
-
     const AVDictionaryEntry *entry = NULL;
     const AVDictionaryEntry *oldentry;
     /* check that no keys have changed values */
@@ -1139,12 +1133,12 @@ static int id3_has_changed_values(struct playlist *pls, AVDictionary *metadata,
 /* Parse ID3 data and handle the found data */
 static void handle_id3(AVIOContext *pb, struct playlist *pls)
 {
+    printf("handle_id3\n");
+
     AVDictionary *metadata = NULL;
     ID3v2ExtraMetaAPIC *apic = NULL;
     ID3v2ExtraMeta *extra_meta = NULL;
     int64_t timestamp = AV_NOPTS_VALUE;
-
-    av_log(pls->parent, AV_LOG_WARNING, "handle_id3");
 
     parse_id3(pls->ctx, pb, &metadata, &timestamp, &pls->audio_setup_info, &apic, &extra_meta);
     dump_metadata_test(NULL, metadata, " ");
@@ -1185,8 +1179,6 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
 static void intercept_id3(struct playlist *pls, uint8_t *buf,
                          int buf_size, int *len)
 {
-    av_log(pls->parent, AV_LOG_WARNING, "intercept_id3");
-
     /* intercept id3 tags, we do not want to pass them to the raw
      * demuxer on all segment switches */
     int bytes;
