@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "*.ejs": "html",
+    "http.h": "c",
+    "internal.h": "c",
+    "os_support.h": "c",
+    "atomic": "c",
+    "bitset": "c"
+  }
+}
