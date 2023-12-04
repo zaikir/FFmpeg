@@ -1231,7 +1231,6 @@ int opt_loglevel(void *optctx, const char *opt, const char *arg)
 {
     const struct { const char *name; int level; } log_levels[] = {
         { "quiet"  , AV_LOG_QUIET   },
-        { "custom"  , AV_LOG_CUSTOM   },
         { "panic"  , AV_LOG_PANIC   },
         { "fatal"  , AV_LOG_FATAL   },
         { "error"  , AV_LOG_ERROR   },

@@ -276,8 +276,6 @@ static const char *get_level_str(int level)
         return "trace";
     case AV_LOG_VERBOSE:
         return "verbose";
-    case AV_LOG_CUSTOM:
-        return "custom";
     case AV_LOG_INFO:
         return "info";
     case AV_LOG_WARNING:

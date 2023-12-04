@@ -159,13 +159,7 @@ typedef struct AVClass {
 /**
  * Print no output.
  */
-#define AV_LOG_QUIET    -16
-
-
-/**
- * Custom logs
- */
-#define AV_LOG_CUSTOM     -8
+#define AV_LOG_QUIET    -8
 
 /**
  * Something went really wrong and we will crash now.
