@@ -1,1 +1,0 @@
-docker build -t zaidulinkirill96/ffmpeg:6.0-arm .
