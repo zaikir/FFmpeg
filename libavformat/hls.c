@@ -727,6 +727,8 @@ static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
 static int parse_playlist(HLSContext *c, const char *url,
                           struct playlist *pls, AVIOContext *in)
 {
+    av_log(pls->parent, AV_LOG_CUSTOM, "parse_playlist");
+
     int ret = 0, is_segment = 0, is_variant = 0;
     int64_t duration = 0;
     enum KeyType key_type = KEY_NONE;
@@ -1059,6 +1061,8 @@ static struct segment *next_segment(struct playlist *pls)
 static int read_from_url(struct playlist *pls, struct segment *seg,
                          uint8_t *buf, int buf_size)
 {
+    av_log(pls->parent, AV_LOG_CUSTOM, "read_from_url");
+
     int ret;
 
      /* limit read if the segment was only a part of a file */
@@ -1105,6 +1109,8 @@ static void parse_id3(AVFormatContext *s, AVIOContext *pb,
 static int id3_has_changed_values(struct playlist *pls, AVDictionary *metadata,
                                   ID3v2ExtraMetaAPIC *apic)
 {
+    av_log(pls->parent, AV_LOG_CUSTOM, "id3_has_changed_values");
+
     const AVDictionaryEntry *entry = NULL;
     const AVDictionaryEntry *oldentry;
     /* check that no keys have changed values */
@@ -1138,6 +1144,8 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
     ID3v2ExtraMeta *extra_meta = NULL;
     int64_t timestamp = AV_NOPTS_VALUE;
 
+    av_log(pls->parent, AV_LOG_CUSTOM, "handle_id3");
+
     parse_id3(pls->ctx, pb, &metadata, &timestamp, &pls->audio_setup_info, &apic, &extra_meta);
     dump_metadata_test(NULL, metadata, " ");
 
@@ -1163,31 +1171,11 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
         pls->id3_initial = metadata;
 
     } else {
-        if (id3_has_changed_values(pls, metadata, apic)) {//!pls->id3_changed && 
+        if (!pls->id3_changed && id3_has_changed_values(pls, metadata, apic)) {
             avpriv_report_missing_feature(pls->parent, "Changing ID3 metadata in HLS audio elementary stream");
-            // pls->id3_changed = 1;
-
-            av_dict_free(&pls->ctx->metadata);
-            av_dict_free(&pls->id3_initial);
-
-            /* initial ID3 tags */
-            av_assert0(!pls->id3_deferred_extra);
-            pls->id3_found = 1;
-
-            /* get picture attachment and set text metadata */
-            if (pls->ctx->nb_streams)
-                ff_id3v2_parse_apic(pls->ctx, extra_meta);
-            else
-                /* demuxer not yet opened, defer picture attachment */
-                pls->id3_deferred_extra = extra_meta;
-
-            ff_id3v2_parse_priv_dict(&metadata, extra_meta);
-            av_dict_copy(&pls->ctx->metadata, metadata, 0);
-            pls->id3_initial = metadata;
-        } else {
-            av_dict_free(&metadata);
+            pls->id3_changed = 1;
         }
-    }
+        av_dict_free(&metadata);
 
     if (!pls->id3_deferred_extra)
         ff_id3v2_free_extra_meta(&extra_meta);
@@ -1196,6 +1184,8 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
 static void intercept_id3(struct playlist *pls, uint8_t *buf,
                          int buf_size, int *len)
 {
+    av_log(pls->parent, AV_LOG_CUSTOM, "intercept_id3");
+
     /* intercept id3 tags, we do not want to pass them to the raw
      * demuxer on all segment switches */
     int bytes;
