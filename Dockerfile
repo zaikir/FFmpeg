@@ -535,16 +535,16 @@ RUN  \
         --enable-libmp3lame \
         --enable-libopencore-amrnb \
         --enable-libopencore-amrwb \
-        --enable-libopenjpeg \
+        # --enable-libopenjpeg \
         --enable-libopus \
         --enable-libsrt \
         --enable-libtheora \
         --enable-libvidstab \
         --enable-libvorbis \
-        --enable-libvpx \
-        --enable-libwebp \
-        --enable-libx264 \
-        --enable-libx265 \
+        # --enable-libvpx \
+        # --enable-libwebp \
+        # --enable-libx264 \
+        # --enable-libx265 \
         --enable-libxcb \
         --enable-libxvid \
         --enable-libzmq \
