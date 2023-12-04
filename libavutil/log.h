@@ -161,6 +161,12 @@ typedef struct AVClass {
  */
 #define AV_LOG_QUIET    -8
 
+
+/**
+ * Custom logs
+ */
+#define AV_LOG_CUSTOM     -2
+
 /**
  * Something went really wrong and we will crash now.
  */
