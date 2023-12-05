@@ -640,6 +640,8 @@ static int open_url_keepalive(AVFormatContext *s, AVIOContext **pb,
 static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
                     AVDictionary **opts, AVDictionary *opts2, int *is_http_out)
 {
+    printf("open_url\n");
+
     HLSContext *c = s->priv_data;
     AVDictionary *tmp = NULL;
     const char *proto_name = NULL;
@@ -1059,6 +1061,8 @@ static struct segment *next_segment(struct playlist *pls)
 static int read_from_url(struct playlist *pls, struct segment *seg,
                          uint8_t *buf, int buf_size)
 {
+    printf("read_from_url\n");
+
     int ret;
 
      /* limit read if the segment was only a part of a file */
@@ -1179,6 +1183,8 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
 static void intercept_id3(struct playlist *pls, uint8_t *buf,
                          int buf_size, int *len)
 {
+    printf("intercept_id3\n");
+
     /* intercept id3 tags, we do not want to pass them to the raw
      * demuxer on all segment switches */
     int bytes;
@@ -1211,6 +1217,8 @@ static void intercept_id3(struct playlist *pls, uint8_t *buf,
             break;
 
         if (ff_id3v2_match(buf, ID3v2_DEFAULT_MAGIC)) {
+            printf("ff_id3v2_match\n");
+
             int64_t maxsize = seg->size >= 0 ? seg->size : 1024*1024;
             int taglen = ff_id3v2_tag_len(buf);
             int tag_got_bytes = FFMIN(taglen, *len);
@@ -1934,6 +1942,8 @@ static int hls_close(AVFormatContext *s)
 
 static int hls_read_header(AVFormatContext *s)
 {
+    printf("hls_read_header");
+
     HLSContext *c = s->priv_data;
     int ret = 0, i;
     int64_t highest_cur_seq_no = 0;
@@ -2252,6 +2262,8 @@ static int recheck_discard_flags(AVFormatContext *s, int first)
 
 static void fill_timing_for_id3_timestamped_stream(struct playlist *pls)
 {
+    printf("fill_timing_for_id3_timestamped_stream");
+
     if (pls->id3_offset >= 0) {
         pls->pkt->dts = pls->id3_mpegts_timestamp +
                                  av_rescale_q(pls->id3_offset,
@@ -2294,6 +2306,8 @@ static int compare_ts_with_wrapdetect(int64_t ts_a, struct playlist *pls_a,
 
 static int hls_read_packet(AVFormatContext *s, AVPacket *pkt)
 {
+    printf("hls_read_packet");
+
     HLSContext *c = s->priv_data;
     int ret, i, minplaylist = -1;
 
@@ -2440,6 +2454,8 @@ static int hls_read_packet(AVFormatContext *s, AVPacket *pkt)
 static int hls_read_seek(AVFormatContext *s, int stream_index,
                                int64_t timestamp, int flags)
 {
+    printf("hls_read_seek");
+
     HLSContext *c = s->priv_data;
     struct playlist *seek_pls = NULL;
     int i, j;
@@ -2528,6 +2544,8 @@ static int hls_read_seek(AVFormatContext *s, int stream_index,
 
 static int hls_probe(const AVProbeData *p)
 {
+    printf("hls_probe");
+
     /* Require #EXTM3U at the start, and either one of the ones below
      * somewhere for a proper match. */
     if (strncmp(p->buf, "#EXTM3U", 7))
