@@ -188,7 +188,7 @@ void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
                 // av_log(ctx, AV_LOG_INFO, "\n");
             }
         
-        fprintf("metadata_start\n");
+        printf("metadata_start\n");
     }
 }
 
