@@ -729,7 +729,7 @@ static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
 static int parse_playlist(HLSContext *c, const char *url,
                           struct playlist *pls, AVIOContext *in)
 {
-    fprintf("parse_playlist\n");
+    printf("parse_playlist\n");
 
     int ret = 0, is_segment = 0, is_variant = 0;
     int64_t duration = 0;
