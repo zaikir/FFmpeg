@@ -640,8 +640,6 @@ static int open_url_keepalive(AVFormatContext *s, AVIOContext **pb,
 static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
                     AVDictionary **opts, AVDictionary *opts2, int *is_http_out)
 {
-    printf("open_url:::%s\n", url);
-
     HLSContext *c = s->priv_data;
     AVDictionary *tmp = NULL;
     const char *proto_name = NULL;
@@ -729,8 +727,6 @@ static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
 static int parse_playlist(HLSContext *c, const char *url,
                           struct playlist *pls, AVIOContext *in)
 {
-    printf("parse_playlist\n");
-
     int ret = 0, is_segment = 0, is_variant = 0;
     int64_t duration = 0;
     enum KeyType key_type = KEY_NONE;
@@ -1064,8 +1060,6 @@ static struct segment *next_segment(struct playlist *pls)
 static int read_from_url(struct playlist *pls, struct segment *seg,
                          uint8_t *buf, int buf_size)
 {
-    printf("read_from_url\n");
-
     int ret;
 
      /* limit read if the segment was only a part of a file */
@@ -1140,8 +1134,6 @@ static int id3_has_changed_values(struct playlist *pls, AVDictionary *metadata,
 /* Parse ID3 data and handle the found data */
 static void handle_id3(AVIOContext *pb, struct playlist *pls)
 {
-    printf("handle_id3\n");
-
     AVDictionary *metadata = NULL;
     ID3v2ExtraMetaAPIC *apic = NULL;
     ID3v2ExtraMeta *extra_meta = NULL;
@@ -1186,8 +1178,6 @@ static void handle_id3(AVIOContext *pb, struct playlist *pls)
 static void intercept_id3(struct playlist *pls, uint8_t *buf,
                          int buf_size, int *len)
 {
-    printf("intercept_id3\n");
-
     /* intercept id3 tags, we do not want to pass them to the raw
      * demuxer on all segment switches */
     int bytes;
@@ -1220,8 +1210,6 @@ static void intercept_id3(struct playlist *pls, uint8_t *buf,
             break;
 
         if (ff_id3v2_match(buf, ID3v2_DEFAULT_MAGIC)) {
-            printf("ff_id3v2_match\n");
-
             int64_t maxsize = seg->size >= 0 ? seg->size : 1024*1024;
             int taglen = ff_id3v2_tag_len(buf);
             int tag_got_bytes = FFMIN(taglen, *len);
@@ -1681,8 +1669,6 @@ static void add_metadata_from_renditions(AVFormatContext *s, struct playlist *pl
     int i;
 
     for (i = 0; i < pls->n_main_streams; i++) {
-        printf("add_metadata_from_renditions\n");
-
         AVStream *st = pls->main_streams[i];
 
         if (st->codecpar->codec_type != type)
@@ -1947,8 +1933,6 @@ static int hls_close(AVFormatContext *s)
 
 static int hls_read_header(AVFormatContext *s)
 {
-    printf("hls_read_header\n");
-
     HLSContext *c = s->priv_data;
     int ret = 0, i;
     int64_t highest_cur_seq_no = 0;
@@ -2175,8 +2159,6 @@ static int hls_read_header(AVFormatContext *s)
             return ret;
 
         if (pls->id3_deferred_extra && pls->ctx->nb_streams == 1) {
-            printf("pls->id3_deferred_extra && pls->ctx->nb_streams == 1\n");
-
             ff_id3v2_parse_apic(pls->ctx, pls->id3_deferred_extra);
             avformat_queue_attached_pictures(pls->ctx);
             ff_id3v2_parse_priv(pls->ctx, pls->id3_deferred_extra);
@@ -2193,13 +2175,10 @@ static int hls_read_header(AVFormatContext *s)
          * on us if they want to.
          */
         if (pls->is_id3_timestamped || (pls->n_renditions > 0 && pls->renditions[0]->type == AVMEDIA_TYPE_AUDIO)) {
-            printf("pls->is_id3_timestamped || (pls->n_renditions > 0 && pls->renditions[0]->type == AVMEDIA_TYPE_AUDIO)\n");
-
             if (seg && seg->key_type == KEY_SAMPLE_AES && pls->audio_setup_info.setup_data_length > 0 &&
                 pls->ctx->nb_streams == 1)
                 ret = ff_hls_senc_parse_audio_setup_info(pls->ctx->streams[0], &pls->audio_setup_info);
             else {
-                printf("ret = avformat_find_stream_info(pls->ctx, NULL)\n");
                 ret = avformat_find_stream_info(pls->ctx, NULL);
             }
                 
@@ -2220,7 +2199,6 @@ static int hls_read_header(AVFormatContext *s)
          * event flags.
          */
         if (pls->n_main_streams) {
-            printf("pls->n_main_streams\n");
             av_dict_copy(&pls->main_streams[0]->metadata, pls->ctx->metadata, 0);
         }
 
@@ -2276,8 +2254,6 @@ static int recheck_discard_flags(AVFormatContext *s, int first)
 
 static void fill_timing_for_id3_timestamped_stream(struct playlist *pls)
 {
-    // printf("fill_timing_for_id3_timestamped_stream");
-
     if (pls->id3_offset >= 0) {
         pls->pkt->dts = pls->id3_mpegts_timestamp +
                                  av_rescale_q(pls->id3_offset,
@@ -2466,8 +2442,6 @@ static int hls_read_packet(AVFormatContext *s, AVPacket *pkt)
 static int hls_read_seek(AVFormatContext *s, int stream_index,
                                int64_t timestamp, int flags)
 {
-    printf("hls_read_seek\n");
-
     HLSContext *c = s->priv_data;
     struct playlist *seek_pls = NULL;
     int i, j;
@@ -2556,8 +2530,6 @@ static int hls_read_seek(AVFormatContext *s, int stream_index,
 
 static int hls_probe(const AVProbeData *p)
 {
-    printf("hls_probe\n");
-
     /* Require #EXTM3U at the start, and either one of the ones below
      * somewhere for a proper match. */
     if (strncmp(p->buf, "#EXTM3U", 7))
