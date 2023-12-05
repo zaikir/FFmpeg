@@ -166,22 +166,29 @@ void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
     if (m && !(av_dict_count(m) == 1 && av_dict_get(m, "language", NULL, 0))) {
         const AVDictionaryEntry *tag = NULL;
 
-        av_log(ctx, AV_LOG_INFO, "%sMetadata_test:\n", indent);
+        printf("metadata_start\n");
+        // av_log(ctx, AV_LOG_INFO, "%smetadata_test:\n", indent);
         while ((tag = av_dict_iterate(m, tag)))
             if (strcmp("language", tag->key)) {
                 const char *p = tag->value;
-                av_log(ctx, AV_LOG_INFO,
-                       "%s  %-16s: ", indent, tag->key);
+                printf("%s: ", tag->key);
+
+                // av_log(ctx, AV_LOG_INFO, "%s  %-16s: ", indent, tag->key);
                 while (*p) {
                     size_t len = strcspn(p, "\x8\xa\xb\xc\xd");
-                    av_log(ctx, AV_LOG_INFO, "%.*s", (int)(FFMIN(255, len)), p);
+                    printf("%.*s", (int)(FFMIN(255, len)), p);
+
+                    // av_log(ctx, AV_LOG_INFO, "%.*s", (int)(FFMIN(255, len)), p);
                     p += len;
-                    if (*p == 0xd) av_log(ctx, AV_LOG_INFO, " ");
-                    if (*p == 0xa) av_log(ctx, AV_LOG_INFO, "\n%s  %-16s: ", indent, "");
+                    // if (*p == 0xd) av_log(ctx, AV_LOG_INFO, " ");
+                    // if (*p == 0xa) av_log(ctx, AV_LOG_INFO, "\n%s  %-16s: ", indent, "");
                     if (*p) p++;
                 }
-                av_log(ctx, AV_LOG_INFO, "\n");
+                printf("\n");
+                // av_log(ctx, AV_LOG_INFO, "\n");
             }
+        
+        fprintf("metadata_start\n");
     }
 }
 
