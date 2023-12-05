@@ -5,6 +5,7 @@
     "internal.h": "c",
     "os_support.h": "c",
     "atomic": "c",
-    "bitset": "c"
+    "bitset": "c",
+    "typeinfo": "c"
   }
 }

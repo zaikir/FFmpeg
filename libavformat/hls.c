@@ -640,7 +640,7 @@ static int open_url_keepalive(AVFormatContext *s, AVIOContext **pb,
 static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
                     AVDictionary **opts, AVDictionary *opts2, int *is_http_out)
 {
-    printf("open_url\n");
+    printf("open_url:::%s\n", url);
 
     HLSContext *c = s->priv_data;
     AVDictionary *tmp = NULL;
@@ -729,6 +729,8 @@ static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
 static int parse_playlist(HLSContext *c, const char *url,
                           struct playlist *pls, AVIOContext *in)
 {
+    fprintf("parse_playlist\n");
+
     int ret = 0, is_segment = 0, is_variant = 0;
     int64_t duration = 0;
     enum KeyType key_type = KEY_NONE;
@@ -976,6 +978,7 @@ static int parse_playlist(HLSContext *c, const char *url,
                     av_free(seg);
                     goto fail;
                 }
+
                 seg->url = av_strdup(tmp_str);
                 if (!seg->url) {
                     av_free(seg->key);
@@ -1678,6 +1681,8 @@ static void add_metadata_from_renditions(AVFormatContext *s, struct playlist *pl
     int i;
 
     for (i = 0; i < pls->n_main_streams; i++) {
+        printf("add_metadata_from_renditions\n");
+
         AVStream *st = pls->main_streams[i];
 
         if (st->codecpar->codec_type != type)
@@ -1942,7 +1947,7 @@ static int hls_close(AVFormatContext *s)
 
 static int hls_read_header(AVFormatContext *s)
 {
-    printf("hls_read_header");
+    printf("hls_read_header\n");
 
     HLSContext *c = s->priv_data;
     int ret = 0, i;
@@ -2170,6 +2175,8 @@ static int hls_read_header(AVFormatContext *s)
             return ret;
 
         if (pls->id3_deferred_extra && pls->ctx->nb_streams == 1) {
+            printf("pls->id3_deferred_extra && pls->ctx->nb_streams == 1\n");
+
             ff_id3v2_parse_apic(pls->ctx, pls->id3_deferred_extra);
             avformat_queue_attached_pictures(pls->ctx);
             ff_id3v2_parse_priv(pls->ctx, pls->id3_deferred_extra);
@@ -2186,11 +2193,16 @@ static int hls_read_header(AVFormatContext *s)
          * on us if they want to.
          */
         if (pls->is_id3_timestamped || (pls->n_renditions > 0 && pls->renditions[0]->type == AVMEDIA_TYPE_AUDIO)) {
+            printf("pls->is_id3_timestamped || (pls->n_renditions > 0 && pls->renditions[0]->type == AVMEDIA_TYPE_AUDIO)\n");
+
             if (seg && seg->key_type == KEY_SAMPLE_AES && pls->audio_setup_info.setup_data_length > 0 &&
                 pls->ctx->nb_streams == 1)
                 ret = ff_hls_senc_parse_audio_setup_info(pls->ctx->streams[0], &pls->audio_setup_info);
-            else
+            else {
+                printf("ret = avformat_find_stream_info(pls->ctx, NULL)\n");
                 ret = avformat_find_stream_info(pls->ctx, NULL);
+            }
+                
 
             if (ret < 0)
                 return ret;
@@ -2207,8 +2219,10 @@ static int hls_read_header(AVFormatContext *s)
          * Copy any metadata from playlist to main streams, but do not set
          * event flags.
          */
-        if (pls->n_main_streams)
+        if (pls->n_main_streams) {
+            printf("pls->n_main_streams\n");
             av_dict_copy(&pls->main_streams[0]->metadata, pls->ctx->metadata, 0);
+        }
 
         add_metadata_from_renditions(s, pls, AVMEDIA_TYPE_AUDIO);
         add_metadata_from_renditions(s, pls, AVMEDIA_TYPE_VIDEO);
@@ -2306,8 +2320,6 @@ static int compare_ts_with_wrapdetect(int64_t ts_a, struct playlist *pls_a,
 
 static int hls_read_packet(AVFormatContext *s, AVPacket *pkt)
 {
-    printf("hls_read_packet");
-
     HLSContext *c = s->priv_data;
     int ret, i, minplaylist = -1;
 
@@ -2454,7 +2466,7 @@ static int hls_read_packet(AVFormatContext *s, AVPacket *pkt)
 static int hls_read_seek(AVFormatContext *s, int stream_index,
                                int64_t timestamp, int flags)
 {
-    printf("hls_read_seek");
+    printf("hls_read_seek\n");
 
     HLSContext *c = s->priv_data;
     struct playlist *seek_pls = NULL;
@@ -2544,7 +2556,7 @@ static int hls_read_seek(AVFormatContext *s, int stream_index,
 
 static int hls_probe(const AVProbeData *p)
 {
-    printf("hls_probe");
+    printf("hls_probe\n");
 
     /* Require #EXTM3U at the start, and either one of the ones below
      * somewhere for a proper match. */
