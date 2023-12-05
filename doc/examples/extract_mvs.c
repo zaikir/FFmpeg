@@ -153,6 +153,7 @@ int main(int argc, char **argv)
 
     open_codec_context(fmt_ctx, AVMEDIA_TYPE_VIDEO);
 
+    printf("extract_mvc\n");
     av_dump_format(fmt_ctx, 0, src_filename, 0);
 
     if (!video_stream) {

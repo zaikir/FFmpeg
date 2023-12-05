@@ -116,6 +116,7 @@ static int open_input_file(const char *filename)
             return AVERROR(ENOMEM);
     }
 
+    printf("transcode\n");
     av_dump_format(ifmt_ctx, 0, filename, 0);
     return 0;
 }
@@ -216,6 +217,7 @@ static int open_output_file(const char *filename)
         }
 
     }
+    printf("transcode\n");
     av_dump_format(ofmt_ctx, 0, filename, 1);
 
     if (!(ofmt_ctx->oformat->flags & AVFMT_NOFILE)) {

@@ -3355,6 +3355,7 @@ static int open_input_file(InputFile *ifile, const char *filename,
         }
     }
 
+    printf("ffprobe\n");
     av_dump_format(fmt_ctx, 0, filename, 0);
 
     ifile->streams = av_calloc(fmt_ctx->nb_streams, sizeof(*ifile->streams));

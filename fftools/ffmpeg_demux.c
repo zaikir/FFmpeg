@@ -1081,6 +1081,7 @@ int ifile_open(const OptionsContext *o, const char *filename)
     add_input_streams(o, d);
 
     /* dump the file content */
+    printf("ffmpeg_demux\n");
     av_dump_format(ic, f->index, filename, 0);
 
     /* check if all codec options have been used */

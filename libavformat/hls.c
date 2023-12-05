@@ -2276,7 +2276,7 @@ static int recheck_discard_flags(AVFormatContext *s, int first)
 
 static void fill_timing_for_id3_timestamped_stream(struct playlist *pls)
 {
-    printf("fill_timing_for_id3_timestamped_stream");
+    // printf("fill_timing_for_id3_timestamped_stream");
 
     if (pls->id3_offset >= 0) {
         pls->pkt->dts = pls->id3_mpegts_timestamp +

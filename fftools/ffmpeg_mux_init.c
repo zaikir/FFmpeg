@@ -1445,6 +1445,7 @@ static void create_streams(Muxer *mux, const OptionsContext *o)
     of_add_attachments(mux, o);
 
     if (!oc->nb_streams && !(oc->oformat->flags & AVFMT_NOSTREAMS)) {
+        printf("ffmpeg_mux_init\n");
         av_dump_format(oc, nb_output_files - 1, oc->url, 1);
         av_log(mux, AV_LOG_ERROR, "Output file does not contain any stream\n");
         exit_program(1);

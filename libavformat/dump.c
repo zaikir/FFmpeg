@@ -136,6 +136,8 @@ static void print_fps(double d, const char *postfix)
 
 static void dump_metadata(void *ctx, const AVDictionary *m, const char *indent)
 {
+    printf("dump_metadata\n");
+
     if (m && !(av_dict_count(m) == 1 && av_dict_get(m, "language", NULL, 0))) {
         const AVDictionaryEntry *tag = NULL;
 
@@ -160,6 +162,7 @@ static void dump_metadata(void *ctx, const AVDictionary *m, const char *indent)
 
 void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
 {
+    printf("dump_metadata_test");
     if (m && !(av_dict_count(m) == 1 && av_dict_get(m, "language", NULL, 0))) {
         const AVDictionaryEntry *tag = NULL;
 
@@ -535,6 +538,8 @@ static void dump_sidedata(void *ctx, const AVStream *st, const char *indent)
 static void dump_stream_format(const AVFormatContext *ic, int i,
                                int index, int is_output)
 {
+    printf("dump_stream_format\n");
+
     char buf[256];
     int flags = (is_output ? ic->oformat->flags : ic->iformat->flags);
     const AVStream *st = ic->streams[i];
@@ -653,6 +658,8 @@ static void dump_stream_format(const AVFormatContext *ic, int i,
 void av_dump_format(AVFormatContext *ic, int index,
                     const char *url, int is_output)
 {
+    printf("av_dump_format\n");
+
     int i;
     uint8_t *printed = ic->nb_streams ? av_mallocz(ic->nb_streams) : NULL;
     if (ic->nb_streams && !printed)
