@@ -508,8 +508,11 @@ int ff_http_do_new_request2(URLContext *h, const char *uri, AVDictionary **opts)
         return ret;
 
     av_log(s, AV_LOG_INFO, "Opening \'%s\' for %s\n", uri, h->flags & AVIO_FLAG_WRITE ? "writing" : "reading");
+    printf("ff_http_do_new_request2\n");
     ret = http_open_cnx(h, &options);
+    printf("ff_http_do_new_request2_1\n");
     av_dict_free(&options);
+    printf("ff_http_do_new_request2_2\n");
     return ret;
 }
 

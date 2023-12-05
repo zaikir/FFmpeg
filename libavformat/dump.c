@@ -136,7 +136,7 @@ static void print_fps(double d, const char *postfix)
 
 static void dump_metadata(void *ctx, const AVDictionary *m, const char *indent)
 {
-    printf("dump_metadata\n");
+    printf("\ndump_metadata\n");
 
     if (m && !(av_dict_count(m) == 1 && av_dict_get(m, "language", NULL, 0))) {
         const AVDictionaryEntry *tag = NULL;
@@ -162,11 +162,11 @@ static void dump_metadata(void *ctx, const AVDictionary *m, const char *indent)
 
 void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
 {
-    printf("dump_metadata_test");
+    printf("\ndump_metadata_test\n");
     if (m && !(av_dict_count(m) == 1 && av_dict_get(m, "language", NULL, 0))) {
         const AVDictionaryEntry *tag = NULL;
 
-        av_log(ctx, AV_LOG_INFO, "%sMetadata:\n", indent);
+        av_log(ctx, AV_LOG_INFO, "%sMetadata_test:\n", indent);
         while ((tag = av_dict_iterate(m, tag)))
             if (strcmp("language", tag->key)) {
                 const char *p = tag->value;
