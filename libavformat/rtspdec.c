@@ -311,7 +311,7 @@ static int rtsp_read_setup(AVFormatContext *s, char* host, char *controlurl)
             AVDictionary *opts = NULL;
             av_dict_set_int(&opts, "buffer_size", rt->buffer_size, 0);
             ff_url_join(url, sizeof(url), "rtp", NULL, host, localport, NULL);
-            av_log(s, AV_LOG_TRACE, "Opening: %s\n", url);
+            av_log(s, AV_LOG_TRACE, "Opening_3: %s\n", url);
             ret = ffurl_open_whitelist(&rtsp_st->rtp_handle, url, AVIO_FLAG_READ_WRITE,
                                        &s->interrupt_callback, &opts,
                                        s->protocol_whitelist, s->protocol_blacklist, NULL);
