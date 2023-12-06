@@ -112,7 +112,6 @@ int main(int argc, char *argv[])
         goto end;
     }
 
-    printf("avio_read_callback\n");
     av_dump_format(fmt_ctx, 0, input_filename, 0);
 
 end:

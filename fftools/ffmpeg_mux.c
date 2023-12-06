@@ -524,7 +524,6 @@ int mux_check_init(Muxer *mux)
     //assert_avoptions(of->opts);
     mux->header_written = 1;
 
-    printf("ffmpeg_mux\n");
     av_dump_format(fc, of->index, fc->url, 1);
     nb_output_dumped++;
 

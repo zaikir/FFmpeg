@@ -81,7 +81,6 @@ int main(int argc, char **argv)
         goto end;
     }
 
-    printf("remux\n");
     av_dump_format(ifmt_ctx, 0, in_filename, 0);
 
     avformat_alloc_output_context2(&ofmt_ctx, NULL, NULL, out_filename);
@@ -128,7 +127,7 @@ int main(int argc, char **argv)
         }
         out_stream->codecpar->codec_tag = 0;
     }
-    printf("remux\n");
+
     av_dump_format(ofmt_ctx, 0, out_filename, 1);
 
     if (!(ofmt->flags & AVFMT_NOFILE)) {

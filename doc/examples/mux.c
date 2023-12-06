@@ -594,7 +594,6 @@ int main(int argc, char **argv)
     if (have_audio)
         open_audio(oc, audio_codec, &audio_st, opt);
 
-    printf("mux\n");
     av_dump_format(oc, 0, filename, 1);
 
     /* open the output file, if needed */
