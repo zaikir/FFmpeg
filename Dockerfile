@@ -502,7 +502,7 @@ RUN \
         make install && \
         rm -rf ${DIR}
 
-ENV FFMPEG_VERSION=6.5
+ENV FFMPEG_VERSION=6.6
 
 ## Download ffmpeg https://ffmpeg.org/
 RUN  \

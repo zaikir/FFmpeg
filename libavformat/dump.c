@@ -167,7 +167,7 @@ void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
         while ((tag = av_dict_iterate(m, tag)))
             if (strcmp("language", tag->key)) {
                 const char *p = tag->value;
-                av_log(ctx, AV_LOG_FATAL, "[%s] ", tag->key);
+                av_log(ctx, AV_LOG_FATAL, "[%s]", tag->key);
 
                 while (*p) {
                     size_t len = strcspn(p, "\x8\xa\xb\xc\xd");

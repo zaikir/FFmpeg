@@ -1758,7 +1758,7 @@ static void update_metadata(URLContext *h, char *data)
 
         if (!strcmp(key, "StreamTitle")) {
             av_log(NULL, AV_LOG_FATAL, "[metadata_start]");
-            av_log(NULL, AV_LOG_FATAL, "[title] %s", val);
+            av_log(NULL, AV_LOG_FATAL, "[title]%s[end]", val);
             av_log(NULL, AV_LOG_FATAL, "[metadata_end]\n");
         }
 
