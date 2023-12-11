@@ -160,7 +160,7 @@ static void dump_metadata(void *ctx, const AVDictionary *m, const char *indent)
 
 void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
 {
-    av_log(ctx, AV_LOG_FATAL, "[hls_metadata_start]\n");
+    av_log(ctx, AV_LOG_FATAL, "[metadata_start]");
 
     if (m && !(av_dict_count(m) == 1 && av_dict_get(m, "language", NULL, 0))) {
         const AVDictionaryEntry *tag = NULL;
@@ -175,10 +175,10 @@ void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
                     p += len;
                     if (*p) p++;
                 }
-                av_log(ctx, AV_LOG_FATAL, "\n");
+                av_log(ctx, AV_LOG_FATAL, "[end]");
             }
     }
-    av_log(ctx, AV_LOG_FATAL, "[hls_metadata_end]\n");
+    av_log(ctx, AV_LOG_FATAL, "[metadata_end]\n");
 }
 
 /* param change side data*/

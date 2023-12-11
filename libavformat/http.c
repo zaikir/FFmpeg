@@ -1757,9 +1757,9 @@ static void update_metadata(URLContext *h, char *data)
         av_dict_set(&s->metadata, key, val, 0);
 
         if (!strcmp(key, "StreamTitle")) {
-            av_log(NULL, AV_LOG_FATAL, "[hls_metadata_start]\n");
-            av_log(NULL, AV_LOG_FATAL, "[title] %s\n", val);
-            av_log(NULL, AV_LOG_FATAL, "[hls_metadata_end]\n");
+            av_log(NULL, AV_LOG_FATAL, "[metadata_start]");
+            av_log(NULL, AV_LOG_FATAL, "[title] %s", val);
+            av_log(NULL, AV_LOG_FATAL, "[metadata_end]\n");
         }
 
         av_log(h, AV_LOG_VERBOSE, "Metadata update for %s: %s\n", key, val);
