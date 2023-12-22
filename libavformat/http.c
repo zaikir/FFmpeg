@@ -1758,9 +1758,11 @@ static void update_metadata(URLContext *h, char *data)
         av_dict_set(&s->metadata, key, val, 0);
 
         if (!strcmp(key, "StreamTitle")) {
+            AVRational base = get_current_pts_time_base();
+
             av_log(NULL, AV_LOG_FATAL, "[metadata_start]");
             av_log(NULL, AV_LOG_FATAL, "[title]%s[end]", val);
-            av_log(NULL, AV_LOG_FATAL, "[pts]%s[end]", av_ts2timestr(get_current_pts_time(), &get_current_pts_time_base()));
+            av_log(NULL, AV_LOG_FATAL, "[pts]%s[end]", av_ts2timestr(get_current_pts_time(), &base));
             av_log(NULL, AV_LOG_FATAL, "[metadata_end]\n");
         }
 

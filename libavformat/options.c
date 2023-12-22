@@ -148,7 +148,8 @@ static int io_open_default(AVFormatContext *s, AVIOContext **pb,
         loglevel = AV_LOG_INFO;
 
     if (flags & AVIO_FLAG_WRITE) {
-        av_log(NULL, AV_LOG_FATAL, "[segment]%s[end]\n", av_ts2timestr(get_current_pts_time(), &get_current_pts_time_base()));
+        AVRational base = get_current_pts_time_base();
+        av_log(NULL, AV_LOG_FATAL, "[segment]%s[end]\n", av_ts2timestr(get_current_pts_time(), &base));
     } else {
         av_log(s, loglevel, "Opening \'%s\' for %s\n", url, flags & AVIO_FLAG_WRITE ? "writing" : "reading");
     }
