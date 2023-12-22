@@ -42,6 +42,7 @@
 #include "os_support.h"
 #include "url.h"
 #include "version.h"
+#include "timestamp.h"
 
 /* XXX: POST protocol is not completely implemented because ffmpeg uses
  * only a subset of it. */
@@ -1759,6 +1760,7 @@ static void update_metadata(URLContext *h, char *data)
         if (!strcmp(key, "StreamTitle")) {
             av_log(NULL, AV_LOG_FATAL, "[metadata_start]");
             av_log(NULL, AV_LOG_FATAL, "[title]%s[end]", val);
+            av_log(NULL, AV_LOG_FATAL, "[pts]%s[end]", av_ts2timestr(get_current_pts_time(), &get_current_pts_time_base()));
             av_log(NULL, AV_LOG_FATAL, "[metadata_end]\n");
         }
 

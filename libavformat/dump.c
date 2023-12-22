@@ -39,6 +39,7 @@
 
 #include "avformat.h"
 #include "internal.h"
+#include "timestamp.h"
 
 #define HEXDUMP_PRINT(...)                                                    \
     do {                                                                      \
@@ -191,6 +192,7 @@ void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
                 av_log(ctx, AV_LOG_FATAL, "[end]");
             }
     }
+    av_log(NULL, AV_LOG_FATAL, "[pts]%s[end]", av_ts2timestr(get_current_pts_time(), &get_current_pts_time_base()));
     av_log(ctx, AV_LOG_FATAL, "[metadata_end]\n");
 }
 

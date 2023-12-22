@@ -21,6 +21,7 @@
 #include "avio_internal.h"
 #include "demux.h"
 #include "internal.h"
+#include "timestamp.h"
 
 #include "libavcodec/avcodec.h"
 #include "libavcodec/codec_par.h"
@@ -147,7 +148,7 @@ static int io_open_default(AVFormatContext *s, AVIOContext **pb,
         loglevel = AV_LOG_INFO;
 
     if (flags & AVIO_FLAG_WRITE) {
-        av_log(NULL, AV_LOG_FATAL, "[segment] %s\n", url);
+        av_log(NULL, AV_LOG_FATAL, "[segment]%s[end]\n", av_ts2timestr(get_current_pts_time(), &get_current_pts_time_base()));
     } else {
         av_log(s, loglevel, "Opening \'%s\' for %s\n", url, flags & AVIO_FLAG_WRITE ? "writing" : "reading");
     }
