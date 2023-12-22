@@ -955,6 +955,8 @@ calc_times:
         seg->cur_entry.last_duration = pkt->duration;
     }
 
+    set_current_pts_time(pkt->pts, st->time_base);
+
     if (seg->segment_frame_count == 0) {
         av_log(s, AV_LOG_VERBOSE, "segment:'%s' starts with packet stream:%d pts:%s pts_time:%s frame:%d\n",
                seg->avf->url, pkt->stream_index,

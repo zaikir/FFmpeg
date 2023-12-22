@@ -158,12 +158,17 @@ static void dump_metadata(void *ctx, const AVDictionary *m, const char *indent)
     }
 }
 
+AVRational current_pts_time_base;
 int64_t current_pts_time = 0;
-void set_current_pts_time(int64_t value) {
+void set_current_pts_time(int64_t value, AVRational time_base) {
     current_pts_time = value;
+    current_pts_time_base = time_base;
 }
-int64_t get_current_pts_time(int64_t value) {
+int64_t get_current_pts_time() {
     return current_pts_time;
+}
+AVRational get_current_pts_time_base() {
+    return current_pts_time_base;
 }
 
 void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)

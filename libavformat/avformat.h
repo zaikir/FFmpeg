@@ -2639,8 +2639,9 @@ void av_dump_format(AVFormatContext *ic,
                     int is_output);
 
 void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent);
-void set_current_pts_time(int64_t value);
-int64_t get_current_pts_time(int64_t value);
+void set_current_pts_time(int64_t value, AVRational time_base);
+int64_t get_current_pts_time();
+AVRational get_current_pts_time_base();
 
 #define AV_FRAME_FILENAME_FLAGS_MULTIPLE 1 ///< Allow multiple %d
 
