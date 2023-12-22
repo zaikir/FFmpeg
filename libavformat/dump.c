@@ -158,6 +158,14 @@ static void dump_metadata(void *ctx, const AVDictionary *m, const char *indent)
     }
 }
 
+int64_t current_pts_time = 0;
+void set_current_pts_time(int64_t value) {
+    current_pts_time = value;
+}
+int64_t get_current_pts_time(int64_t value) {
+    return current_pts_time;
+}
+
 void dump_metadata_test(void *ctx, const AVDictionary *m, const char *indent)
 {
     av_log(ctx, AV_LOG_FATAL, "[metadata_start]");
