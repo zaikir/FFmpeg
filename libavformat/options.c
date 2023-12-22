@@ -21,7 +21,7 @@
 #include "avio_internal.h"
 #include "demux.h"
 #include "internal.h"
-#include "timestamp.h"
+#include "libavutil/timestamp.h"
 
 #include "libavcodec/avcodec.h"
 #include "libavcodec/codec_par.h"

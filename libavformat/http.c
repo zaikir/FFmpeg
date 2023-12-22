@@ -42,7 +42,7 @@
 #include "os_support.h"
 #include "url.h"
 #include "version.h"
-#include "timestamp.h"
+#include "libavutil/timestamp.h"
 
 /* XXX: POST protocol is not completely implemented because ffmpeg uses
  * only a subset of it. */

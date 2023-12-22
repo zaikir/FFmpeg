@@ -39,7 +39,7 @@
 
 #include "avformat.h"
 #include "internal.h"
-#include "timestamp.h"
+#include "libavutil/timestamp.h"
 
 #define HEXDUMP_PRINT(...)                                                    \
     do {                                                                      \
